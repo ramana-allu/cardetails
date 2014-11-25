@@ -1,0 +1,43 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vehicles.lookup.repository.LookupRepository">
+
+
+    <resultMap id="country" type="com.vehicles.lookup.Country">
+        <id property="countryId" column="countryid"/>
+        <result property="countryName" column="name"/>
+        <result property="countryCode" column="countrycode"/>
+    </resultMap>
+    
+    <resultMap id="state" type="com.vehicles.lookup.State">
+    	<id property="stateId" column="stateid"/>
+        <result property="CountryId" column="countryid"/>
+        <result property="stateName" column="statename"/>
+        <result property="stateCode" column="statecode"/>
+    </resultMap>
+    
+    <resultMap id="city" type="com.vehicles.lookup.City">
+        <id property="cityId" column="cityid"/>
+        <result property="stateId" column="stateid"/>
+        <result property="cityName" column="cityname"/>
+        <result property="cityCode" column="citycode"/>
+    </resultMap>
+
+
+	<select id="totalCountries" resultType="java.lang.Integer">
+		select COUNT(*)from state
+	</select>
+
+	<select id="getCountries" resultMap="country">
+		select countryid,name, countrycode from country
+	</select>
+
+	<select id="getStates" resultMap="state">
+		select stateid, countryid, statename, statecode from state where countryid = #{countryid}
+	</select>
+
+	<select id="getCities" resultMap="city">
+		select cityid, stateid, cityname, citycode from city where stateid = #{stateid}
+	</select>
+
+</mapper>

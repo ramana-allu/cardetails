@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<!-- see: http://logback.qos.ch/manual/configuration.html -->
+
+	<appender name="STD_OUT" class="ch.qos.logback.core.ConsoleAppender"><!-- http://logback.qos.ch/manual/appenders.html -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- http://logback.qos.ch/manual/filters.html -->
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder><!-- see: http://logback.qos.ch/manual/layouts.html#conversionWord -->
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -> %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_OUT" class="ch.qos.logback.core.FileAppender">
+		<file>./target/test.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36}.%M - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- http://logback.qos.ch/manual/configuration.html#loggerElement -->
+	<logger name="net.uday" level="info">
+        <appender-ref ref="FILE_OUT"/>
+    </logger>
+
+	<root level="warn">
+		<appender-ref ref="STD_OUT"/>
+	</root>
+</configuration>
